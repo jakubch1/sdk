@@ -12,6 +12,7 @@ using Microsoft.NET.TestFramework.Commands;
 using Microsoft.NET.TestFramework.ProjectConstruction;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Microsoft.DotNet.Cli.Package.Add.Tests
 {
@@ -249,10 +250,10 @@ namespace Microsoft.DotNet.Cli.Package.Add.Tests
             return project;
         }
 
-        private string GetPackagePath(string targetFramework, string packageName, string version)
+        private string GetPackagePath(string targetFramework, string packageName, string version, [CallerMemberName] string callingMethod = "")
         {
             var project = GetProject(targetFramework, packageName, version);
-            var packCommand = new PackCommand(Log, _testAssetsManager.CreateTestProject(project).TestRoot, packageName);
+            var packCommand = new PackCommand(Log, _testAssetsManager.CreateTestProject(project, identifier: callingMethod).TestRoot, packageName);
 
             packCommand
                 .Execute()

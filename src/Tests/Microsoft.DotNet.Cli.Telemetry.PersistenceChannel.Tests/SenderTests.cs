@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using FluentAssertions;
 using Microsoft.DotNet.Tools.Test.Utilities;
@@ -170,9 +171,9 @@ namespace Microsoft.DotNet.Cli.Telemetry.PersistenceChannel.Tests
             }
         }
 
-        private StorageService CreateStorageService()
+        private StorageService CreateStorageService([CallerMemberName] string testName = null)
         {
-            string tempPath = Path.Combine(_testAssetsManager.CreateTestDirectory("TestStorageService").Path, Path.GetTempFileName());
+            string tempPath = Path.Combine(_testAssetsManager.CreateTestDirectory("TestStorageService", identifier: testName).Path, Path.GetTempFileName());
             StorageService storageService = new StorageService();
             storageService.Init(tempPath);
             return storageService;
